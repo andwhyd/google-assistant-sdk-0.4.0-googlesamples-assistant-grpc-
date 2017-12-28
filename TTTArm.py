@@ -24,11 +24,12 @@ class Arm: # Uncomment serial stuff when arm is actually connected
             # return True
         return False
 
-    def movePos(self, letter, move): # Not done yet
+    def movePos(self, letter, move): # Comment out testing when connected to arm
         # Sends a signal to the arm to draw the input letter at the input position.
         # if self.isBusy() != True:
-            # self.ser.write(b('P'+str(letter)+str(move)+'$'))
-        print('Sent over serial: P'+str(letter)+str(move)+'$') # Testing
+            # self.ser.write(b('P '+str(letter)+ ' ' + str(move)+'$'))
+            # print('Sent over serial: P '+str(letter) + ' ' +str(move)+'$') # Logging
+        print('Sent over serial: P '+str(letter) + ' ' +str(move)+'$') # Testing
             # if self.ser.read_until('$').decode('utf-8') == 'Invalid':
                 # print('Falied: Invalid request')
                 # return False
@@ -69,8 +70,8 @@ class Arm: # Uncomment serial stuff when arm is actually connected
             fNum = 9
             sNum = 1
         print(str(winNum))
-        # self.ser.write(b('W'+str(fNum)+str(sNum)+'$'))
-        print('Sent over serial: W'+str(fNum)+str(sNum)+'$') # Testing
+        # self.ser.write(b('W ' + str(fNum) + ' ' + str(sNum) + '$'))
+        print('Sent over serial: W ' + str(fNum) + ' ' + str(sNum) + '$') # Logging
 
     def close(self):
         # Closes the serial port.
@@ -129,8 +130,8 @@ class Board: # Should be complete
         # Make a duplicate of the board list and return it the duplicate.
         dupeBoard = Board()
 
-        for i in self.board:
-            dupeBoard.board[i] = i
+        for i in range(1, 10):
+            dupeBoard.board[i] = self.board[i]
 
         return dupeBoard
 
@@ -208,7 +209,7 @@ class TTTGame:
         bCopy.board[i] = letter
         winningMoves = 0
         for j in range(1, 10):
-            if self.testWinMove(bCopy, letter, j) and bCopy[j] == 0:
+            if self.testWinMove(bCopy, letter, j) and bCopy.board[j] == 0:
                 winningMoves += 1
         return winningMoves >= 2
 
@@ -258,21 +259,20 @@ class TTTGame:
         exit()
 
 def _test():
-    print('test')
+    #Testing:
+    print('Testing:')
+    g = TTTGame()
+    while True:
+        letter = input('What character: X(1) or O(2) ')
+        if letter in ('1', '2'):
+            break
+    g.setPLetter(int(letter))
+    while not g.board.isBoardFull():
+        g.board.draw()
+        playerMove = input('Player move: ')
+        print(g.makeMove(int(playerMove)))
+    g.board.draw()
+    g.quit()
 
 if __name__ == '__main__':
     _test()
-#Testing:
-#print('Testing:')
-#g = TTTGame()
-#while True:
-#    letter = input('What character: X(1) or O(2) ')
-#    if letter in ('1', '2'):
-#        break
-#g.setPLetter(int(letter))
-#while g.board.isWinner(1) or g.board.isWinner(2) == 0:
-#    g.board.draw()
-#    playerMove = input('Player move: ')
-#    print(g.makeMove(int(playerMove)))
-#g.board.draw()
-#g.quit()
