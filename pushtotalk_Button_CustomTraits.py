@@ -371,7 +371,8 @@ def main(api_endpoint, credentials, device_id, verbose,
     @device_handler.command('StartGame')
     def startGame(game):
         logging.info('Starting new game')
-        tttGame = TTTGame()
+        for i in range(1, 10):
+            tttGame.board.board[i] == 0
         # Fake TSS System (better sounding):
         os.system('omxplayer -o alsa "TTS Audio"/start.wav')
         os.system('omxplayer -o alsa "TTS Audio"/XorO.wav')
@@ -412,7 +413,6 @@ def main(api_endpoint, credentials, device_id, verbose,
         elif moveResult == '2W':
             os.system('omxplayer -o alsa "TTS Audio"/oWon.wav')
         os.system('omxplayer -o alsa "TTS Audio"/thank.wav')
-        
 
         
     GPIO.setmode(GPIO.BCM)

@@ -23,7 +23,7 @@ class Arm: # Uncomment serial stuff when arm is actually connected
             #return True
         #return False
 
-    def movePos(self, letter, move): # Not done yet
+    def movePos(self, letter, move): # Comment out testing when connected to arm
         # Sends a signal to the arm to draw the input letter at the input position.
         # if self.isBusy() != True:
         message = ('P '+str(letter)+' '+str(move)+'/r')
@@ -258,21 +258,20 @@ class TTTGame:
         exit()
 
 def _test():
-    print('test')
+    #Testing:
+    print('Testing:')
+    g = TTTGame()
+    while True:
+        letter = input('What character: X(1) or O(2) ')
+        if letter in ('1', '2'):
+            break
+    g.setPLetter(int(letter))
+    while not g.board.isBoardFull():
+        g.board.draw()
+        playerMove = input('Player move: ')
+        print(g.makeMove(int(playerMove)))
+    g.board.draw()
+    g.quit()
 
 if __name__ == '__main__':
     _test()
-#Testing:
-#print('Testing:')
-#g = TTTGame()
-#while True:
-#    letter = input('What character: X(1) or O(2) ')
-#    if letter in ('1', '2'):
-#        break
-#g.setPLetter(int(letter))
-#while g.board.isWinner(1) or g.board.isWinner(2) == 0:
-#    g.board.draw()
-#    playerMove = input('Player move: ')
-#    print(g.makeMove(int(playerMove)))
-#g.board.draw()
-#g.quit()
